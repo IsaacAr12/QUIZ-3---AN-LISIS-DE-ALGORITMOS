@@ -42,6 +42,63 @@ int main() {
         for (int i = 0; i < n; i++) {
             arreglo[i] = rand() % 1000000;
         }
+
+        // MERGE SORT
+
+        vector<int> copia = arreglo;
+
+        auto inicioMerge = high_resolution_clock::now();
+
+        mergeSort(copia, 0, copia.size() - 1);
+
+        auto finMerge = high_resolution_clock::now();
+
+        double tiempoMerge =
+            duration<double, milli>(finMerge - inicioMerge).count();
+
+
+        // BUSQUEDA BINARIA
+        // La busqueda binaria necesita que el arreglo este ordenado
+
+        sort(arreglo.begin(), arreglo.end());
+
+
+        volatile int resultado = 0;
+
+        auto inicioBinaria = high_resolution_clock::now();
+
+        // Se repite porque una sola busqueda es demasiado rapida para medirla
+
+        for (int i = 0; i < 100000; i++) {
+            resultado += busquedaBinaria(arreglo, -1);
+        }
+
+        auto finBinaria = high_resolution_clock::now();
+
+
+        double tiempoBinaria =
+            duration<double, milli>(finBinaria - inicioBinaria).count();
+
+
+        // Promedio de una sola busqueda
+
+        tiempoBinaria = tiempoBinaria / 100000;
+
+
+        // VALORES TEORICOS
+
+        double logN = log2(n);
+
+        double nLogN = n * log2(n);
+
+
+        // RESULTADOS
+
+        cout << n << ","
+             << tiempoBinaria << ","
+             << tiempoMerge << ","
+             << logN << ","
+             << nLogN << endl;
     }
 
 
